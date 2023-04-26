@@ -33,7 +33,7 @@ namespace SQL_CS
             KategoriaBetoltese();
             GyartokBetoltese();
             TermekBetoltesListaba();
-            AdatbazisLezarasa();
+            //AdatbazisLezarasa();
         }
         private void AdatbazisMegnyitas()
         {
@@ -61,11 +61,11 @@ namespace SQL_CS
             while (eredmenyOlvaso.Read())
             {
                 Termek uj = new Termek(
-                    eredmenyOlvaso.GetString("Kategória"),
-                    eredmenyOlvaso.GetString("Gyártó"),
-                    eredmenyOlvaso.GetString("Név"),
-                    eredmenyOlvaso.GetInt32("Ár"),
-                    eredmenyOlvaso.GetInt32("Garidő"));
+                    eredmenyOlvaso.GetString(1),
+                    eredmenyOlvaso.GetString(2),
+                    eredmenyOlvaso.GetString(3),
+                    eredmenyOlvaso.GetInt32(4),
+                    eredmenyOlvaso.GetInt32(4));
                 termekek.Add(uj);
             }
             eredmenyOlvaso.Close();
@@ -76,7 +76,7 @@ namespace SQL_CS
             StreamWriter sw = new StreamWriter("save.csv");
             foreach (var item in termekek)
             {
-                sw.WriteLine(item.ToString());
+                sw.WriteLine(Termek.ToCSVString(item));
             }
             sw.Close();
         }
@@ -89,24 +89,24 @@ namespace SQL_CS
             cbGyarto.Items.Add(" - Nincs megadva - ");
             while (eredmenyOlvaso.Read())
             {
-                cbGyarto.Items.Add(eredmenyOlvaso.GetString("Gyártó"));
+                cbGyarto.Items.Add(eredmenyOlvaso.GetString(0));
             }
             eredmenyOlvaso.Close();
             cbGyarto.SelectedIndex = 0;
         }
         private void KategoriaBetoltese()
         {
-            string SQLGKategoriakRendezve = "SELECT DISTINCT kategória FROM termékek ORDER BY kategória;";
+            string SQLGKategoriakRendezve = "SELECT DISTINCT kategória FROM termékek ORDER BY 1;";
             MySqlCommand SQLparancs = new MySqlCommand(SQLGKategoriakRendezve, SQLkapcsolat);
             MySqlDataReader eredmenyOlvaso = SQLparancs.ExecuteReader();
 
-            cbGyarto.Items.Add(" - Nincs megadva - ");
+            cbKategoria.Items.Add(" - Nincs megadva - ");
             while (eredmenyOlvaso.Read())
             {
-                cbGyarto.Items.Add(eredmenyOlvaso.GetString("kategória"));
+                cbKategoria.Items.Add(eredmenyOlvaso.GetString(0));
             }
             eredmenyOlvaso.Close();
-            cbGyarto.SelectedIndex = 0;
+            cbKategoria.SelectedIndex = 0;
         }
 
         private void btnSzukit_Click(object sender, RoutedEventArgs e)
@@ -119,11 +119,11 @@ namespace SQL_CS
             while (eredmenyOlvaso.Read())
             {
                 Termek uj = new Termek(
-                    eredmenyOlvaso.GetString("Kategória"),
-                    eredmenyOlvaso.GetString("Gyártó"),
-                    eredmenyOlvaso.GetString("Név"),
-                    eredmenyOlvaso.GetInt32("Ár"),
-                    eredmenyOlvaso.GetInt32("Garidő"));
+                    eredmenyOlvaso.GetString(1),
+                    eredmenyOlvaso.GetString(2),
+                    eredmenyOlvaso.GetString(3),
+                    eredmenyOlvaso.GetInt32(4),
+                    eredmenyOlvaso.GetInt32(4));
                 termekek.Add(uj);
             }
             eredmenyOlvaso.Close();

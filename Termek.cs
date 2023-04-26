@@ -22,6 +22,10 @@ namespace SQL_CS
             this.ar = ar;
             this.garido = garido;
         }
+        public static String ToCSVString(Termek par)
+        {
+            return $"{par.kategoria};{par.gyarto};{par.nev};{par.ar};{par.garido}";
+        }
 
         public string Kategoria { get => kategoria; set => kategoria = value; }
         public string Gyarto { get => gyarto; set => gyarto = value; }
